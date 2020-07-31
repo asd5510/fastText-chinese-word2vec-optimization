@@ -215,4 +215,4 @@ word representation. In Empirical Methods in Natural Language Processing (EMNLP)
 
 <br>
     
-更多用法参照fasttext社区版：https://github.com/facebookresearch/fastText
+更多用法和文档请参照fasttext社区版：https://github.com/facebookresearch/fastText
