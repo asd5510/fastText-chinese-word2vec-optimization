@@ -36,7 +36,7 @@ fastText训练词向量的方式同其余词向量训练工具(如gensim)的最�
 1) 提供对wi的word embedding和char ngram embedding非均匀加权的能力。包括改写训练阶段的avg-pool为加权avg-pool，改写梯度分配，改写词向量计算的avg-pool。
 2) 融合fastText的wi,wo两部分参数矩阵输出词向量 
 3) 提供一个配套的测试方法和词向量输出方法，对比评估原版词向量和优化后词向量的nn结果，输出优化后的词向量文件。
-4) 为了方便使用char ngram embedding，提供一个输出全量char embedding的方法。 
+4) 为了方便使用char ngram embedding，提供一个导出全量char embedding的功能。 
 
 
  
@@ -78,7 +78,7 @@ unzip test_data.zip
 为了对比使用默认参数训练一个模型作为对比：
 
 ```
-./fasttext skipgram -input training_m.data -output model_raw -minn 1 -maxn 1
+./fasttext skipgram -input training_m.data -output model_raw -minn 1 -maxn 1 -epoch 100
 ```
 
 按此默认参数下得到的模型同社区版直接训练的结果是一致的。此处minn和maxn的参数都设置为1，即仅使用中文字向量，这适用于大部分中文词向量的训练，因为中文词不像英文单词由大量char构成，因此minn=maxn=1保证只使用1-gram 
@@ -97,7 +97,7 @@ unzip test_data.zip
 ./fasttext nn model_raw.bin
 ```
 
-结果如下：
+结果如下(训练有随机性)：
 
 ```python
 model_opt.bin的结果：
@@ -180,7 +180,7 @@ Query word? 设力电水
 社区版fasttext提供了导出词向量的功能，但无法导出全量subwords embedding，而这是fasttext词向量的核心，因此增加一个导出功能，通过添加参数-saveSubwords。
 
 ```
-./fasttext cbow -input training_m.data -output model_with_subwords -saveSubwords -minn 1 -maxn 1 -factor 10 -addWo 0.5
+./fasttext cbow -input training_m.data -output model_with_subwords -saveSubwords -minn 1 -maxn 1 -factor 5 -addWo 0.5 -epoch 100
 ```
 
 导出文件保存为：模型文件名+_subwords.vec。这里就是model_with_subwords_subwords.vec
@@ -189,7 +189,7 @@ Query word? 设力电水
 
  ![subword embedding](charemb.png "subword embedding")
 
-顺便提一下这里使用了CBOW而不是skipgram，该模型需要的factor值会比skipgram更大一些，实测取8-12比较合适。
+
 
 
 <br> 
