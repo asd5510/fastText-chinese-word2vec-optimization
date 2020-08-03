@@ -78,7 +78,7 @@ unzip test_data.zip
 为了对比使用默认参数训练一个模型作为对比：
 
 ```
-./fasttext skipgram -input training_m.data -output model_raw -minn 1 -maxn 1 -epoch 100
+./fasttext skipgram -input training_m.data -output model_raw -minn 1 -maxn 1
 ```
 
 按此默认参数下得到的模型同社区版直接训练的结果是一致的。此处minn和maxn的参数都设置为1，即仅使用中文字向量，这适用于大部分中文词向量的训练，因为中文词不像英文单词由大量char构成，因此minn=maxn=1保证只使用1-gram 
@@ -180,7 +180,7 @@ Query word? 设力电水
 社区版fasttext提供了导出词向量的功能，但无法导出全量subwords embedding，而这是fasttext词向量的核心，因此增加一个导出功能，通过添加参数-saveSubwords。
 
 ```
-./fasttext cbow -input training_m.data -output model_with_subwords -saveSubwords -minn 1 -maxn 1 -factor 5 -addWo 0.5 -epoch 100
+./fasttext cbow -input training_m.data -output model_with_subwords -saveSubwords -minn 1 -maxn 1 -factor 5 -addWo 0.5 -epoch 20
 ```
 
 导出文件保存为：模型文件名+_subwords.vec。这里就是model_with_subwords_subwords.vec
